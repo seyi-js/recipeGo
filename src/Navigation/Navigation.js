@@ -5,7 +5,7 @@ import { createStackNavigator } from '@react-navigation/stack'
 import { createDrawerNavigator } from '@react-navigation/drawer'
 import { SafeAreaProvider } from 'react-native-safe-area-context'
 import store from '../react-redux/store/store'
-import { loadRecipes } from '../react-redux/action/actions'
+import { loadData } from '../react-redux/action/actions'
 import SplashScreen from '../Screens/Splash/Splash'
 import HomeScreen from '../Screens/Home/HomeScreen'
 import MenuImage from '../component/MenuImage/MenuImage';
@@ -26,7 +26,7 @@ const Navigating = () => {
 
 
     <Stack.Navigator>
-
+    <Stack.Screen options={ { headerShown: false } } name="splash" component={ SplashScreen } />
       <Stack.Screen name="Home" component={ HomeScreen } options={ ( { navigation } ) => ( {
         title: 'Home',
         headerStyle: {
@@ -36,8 +36,8 @@ const Navigating = () => {
           <MenuImage navigation={ navigation } />
         )
       } ) } />
-      <Stack.Screen options={ { headerShown: false } } name="splash" component={ SplashScreen } />
-      <Stack.Screen options={ { title: 'Categories' } } name="Categories" component={ Categories } />
+      
+      
       <Stack.Screen options={ ({navigation,route})=>({title: route.params.title })} name="RecipeList" component={ RecipeList } />
       <Stack.Screen options={ ( { navigation } ) => ( {
         headerTransparent: 'true',
@@ -51,12 +51,12 @@ const Navigating = () => {
       } ) }  name="Recipe" component={ Recipe } />
 
       <Stack.Screen options={ ({navigation,route})=>({title: route.params.name })} name="Ingredient" component={ Ingredient } />
-      <Stack.Screen options={ ({navigation,route})=>({title: route.params.title,headerTitleStyle: {
+      <Stack.Screen options={ ({navigation,route})=>({title: route.params.titles,headerTitleStyle: {
         fontSize: 16
       }
       } ) } name="IngredientsDetails" component={ IngredientDetails } />
       
-      <Stack.Screen options={({navigation})=> searchOptions(navigation)}  name="Search" component={ Search }/>
+      <Stack.Screen options={({navigation,route})=> searchOptions({navigation,route})}  name="Search" component={ Search }/>
     </Stack.Navigator>
 
 
@@ -82,7 +82,7 @@ function DrawerStack() {
 
 export const Navigation = () => {
   useEffect( () => {
-    store.dispatch( loadRecipes() )
+    store.dispatch( loadData() )
   }, [] )
   return (
     <SafeAreaProvider>
@@ -96,7 +96,7 @@ export const Navigation = () => {
 export default Navigation
 
 //Search Bar Options
-const searchOptions=(navigation)=> ({
+const searchOptions=({navigation,route})=> ({
   headerRight:()=> (
     <MenuImage navigation={ navigation}/>
   ),
@@ -122,10 +122,10 @@ const searchOptions=(navigation)=> ({
       
       // lightTheme
       round
-      onChangeText={text =>alert(text)}
-      // onClear={() => null}
+      onChangeText={text =>route.params.handleSearch(text)}
+      onClear={() =>route.params.handleSearch('')}
       placeholder="Search"
-      value=''
+      value={()=>route.params}
     />
   )
 })

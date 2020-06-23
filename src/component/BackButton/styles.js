@@ -1,3 +1,4 @@
+/* eslint-disable prettier/prettier */
 import { StyleSheet } from 'react-native';
 
 const styles = StyleSheet.create({
@@ -8,7 +9,7 @@ const styles = StyleSheet.create({
     padding: 8,
     margin: 10,
     backgroundColor: 'white',
-    shadowColor: '#000',
+    shadowColor: 'white',
     shadowOffset: {
       width: 0,
       height: 2

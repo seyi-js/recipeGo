@@ -1,5 +1,5 @@
 /* eslint-disable prettier/prettier */
-import React from 'react';
+import React,{useState, useEffect} from 'react';
 import {
   ScrollView,
   Text,
@@ -9,108 +9,44 @@ import {
   TouchableHighlight
 } from 'react-native';
 import styles from './styles';
-import Carousel, { Pagination } from 'react-native-snap-carousel';
 import ViewIngredientsButton from '../../component/ViewIngredient/ViewIngredient';
 import {connect} from 'react-redux'
-const { width: viewportWidth } = Dimensions.get('window');
+import rest_config from '../../../rest_config'
 
-export  class Recipe extends React.Component {
+
+export  const Recipe=({navigation,route})=> {
+  const [item, setItem]=useState({})
+
   
 
-  constructor(props) {
-    super(props);
-    this.state = {
-      activeSlide: 0
-    };
-  }
-
-  renderImage = ({ item }) => (
-    <TouchableHighlight>
-      <View style={styles.imageContainer}>
-        <Image style={styles.image} source={{ uri: item }} />
-      </View>
-    </TouchableHighlight>
-  );
-
-  onPressIngredient = item => {
-    var name = this.getIngredientName(item);
-    let ingredient = item;
-    this.props.navigation.navigate('Ingredient', { ingredient, name });
-  };
-  //GET CATEGORIES
-  getCategory = (categoryId) => {
-    const categories = this.props.data.categories
-    let category;
-    categories.map(data => {
-      if (data.id == categoryId) {
-        category = data;
-      }
-    });
-    return category;
-  }
-  //Get category name
-  getCategoryName = (categoryId) => {
-    const categories = this.props.data.categories
-
-    let name;
-    categories.map(data => {
-      if (data.id == categoryId) {
-        name = data.name;
-      }
-    });
-    return name;
-  }
-  //get ingredient name
-  getIngredientName = (ingredientID) => {
-    const ingredients = this.props.data.ingredients
-    let name;
-    ingredients.map(data => {
-      if (data.ingredientId == ingredientID) {
-        name = data.name;
-      }
-    });
-    return name;
-  }
-  render() {
-    const { activeSlide } = this.state;
-    const { navigation,route } = this.props;
+  useEffect( () => {
     const item = route.params.item;
-    const category = this.getCategory(item.categoryId);
-    const title = this.getCategoryName(category.id);
+    const id = item.id
+    const config = {
+      headers: {
+        "x-rapidapi-host": rest_config.API_HOST,
+        "x-rapidapi-key": rest_config.API_KEY
+      }
+    }
+    fetch( `https://spoonacular-recipe-food-nutrition-v1.p.rapidapi.com/recipes/${id}/information`, config )
+      .then( res => res.json() )
+      .then( res => setItem( res ) )
+      .catch ( err=> console.log( err ))
+    
+  })
+    
+    
+    
+    const category = item.sourceName
+    const title = item.title;
+   
 
+    
     return (
       <ScrollView style={styles.container}>
         <View style={styles.carouselContainer}>
           <View style={styles.carousel}>
-            <Carousel
-              ref={c => {
-                this.slider1Ref = c;
-              }}
-              data={item.photosArray}
-              renderItem={this.renderImage}
-              sliderWidth={viewportWidth}
-              itemWidth={viewportWidth}
-              inactiveSlideScale={1}
-              inactiveSlideOpacity={1}
-              firstItem={0}
-              loop={false}
-              autoplay={false}
-              autoplayDelay={500}
-              autoplayInterval={3000}
-              onSnapToItem={index => this.setState({ activeSlide: index })}
-            />
-            <Pagination
-              dotsLength={item.photosArray.length}
-              activeDotIndex={activeSlide}
-              containerStyle={styles.paginationContainer}
-              dotColor="rgba(255, 255, 255, 0.92)"
-              dotStyle={styles.paginationDot}
-              inactiveDotColor="white"
-              inactiveDotOpacity={0.4}
-              inactiveDotScale={0.6}
-              carouselRef={this.slider1Ref}
-              tappableDots={!!this.slider1Ref}
-            />
+          <Image style={styles.image} source={{ uri: item.image }} />
           </View>
         </View>
         <View style={styles.infoRecipeContainer}>
@@ -119,32 +55,32 @@ export  class Recipe extends React.Component {
             <TouchableHighlight
               onPress={() => navigation.navigate('RecipesList', { category, title })}
             >
-              <Text style={styles.category}>{this.getCategoryName(item.categoryId).toUpperCase()}</Text>
+              <Text style={styles.category}>{category}</Text>
             </TouchableHighlight>
           </View>
 
           <View style={styles.infoContainer}>
             <Image style={styles.infoPhoto} source={require('../../../assets/icons/time.png')} />
-            <Text style={styles.infoRecipe}>{item.time} minutes </Text>
+            <Text style={styles.infoRecipe}>{item.readyInMinutes} minutes </Text>
           </View>
 
           <View style={styles.infoContainer}>
             <ViewIngredientsButton
               onPress={() => {
-                let ingredients = item.ingredients;
-                let title = 'Ingredients for ' + item.title;
-                navigation.navigate('IngredientsDetails', { ingredients, title });
+                let ingredients = item.extendedIngredients;
+                let titles = 'Ingredients for ' + title;
+                navigation.navigate('IngredientsDetails', { ingredients, titles });
               }}
             />
           </View>
           <View style={styles.infoContainer}>
-            <Text style={styles.infoDescriptionRecipe}>{item.description}</Text>
+            <Text style={styles.infoDescriptionRecipe}>{item.instructions}</Text>
           </View>
         </View>
       </ScrollView>
     );
   }
-}
+
 
 const mapStateToProps = state => ( {
   data: state.storeData

@@ -19,14 +19,7 @@ const Drawer = ({navigation}) => {
               navigation.closeDrawer();
             }}
           />
-          <MenuButton
-            title="CATEGORIES"
-            source={require('../../../assets/icons/category.png')}
-            onPress={() => {
-              navigation.navigate('Categories');
-              navigation.closeDrawer();
-            }}
-          />
+         
           <MenuButton
             title="SEARCH"
             source={require('../../../assets/icons/search.png')}

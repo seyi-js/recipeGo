@@ -12,19 +12,20 @@ import { connect } from 'react-redux';
 export const IngredientDetails =({navigation,route, data}) =>{
 
     const onPressIngredient = item => {
-        let name = getIngredientName(item.ingredientId);
-        let ingredient = item.ingredientId;
-        navigation.navigate('Ingredient', { ingredient, name });
+      let name = item.name;
+      let ingredient = item.id;
+      let image = item.image;
+        navigation.navigate('Ingredient', { ingredient, name,image });
     };
     
   
     const  renderIngredient = ({ item }) => (
                 
-        <TouchableHighlight underlayColor='rgba(73,182,77,1,0.9)' onPress={() => onPressIngredient(item[0])}>
+        <TouchableHighlight underlayColor='rgba(73,182,77,1,0.9)' onPress={() => onPressIngredient(item)}>
           <View style={styles.container}>
-            <Image style={styles.photo} source={{ uri: item[0].photo_url }} />
-            <Text style={styles.title}>{item[0].name}</Text>
-            <Text style={{ color: 'grey' }}>{item[1]}</Text>
+            <Image style={styles.photo} source={{ uri: `https://spoonacular.com/cdn/ingredients_100x100/${item.image}` }} />
+            <Text style={styles.title}>{item.name}</Text>
+            <Text style={{ color: 'grey' }}>{item.unit}</Text>
           </View>
         </TouchableHighlight>
   );
@@ -39,21 +40,10 @@ export const IngredientDetails =({navigation,route, data}) =>{
     });
     return name;
   }
-  //Get all Ingredients
-  const getAllIngredients = (idArray) => {
-    const ingredientsArray = [];
-    idArray.map(index => {
-      ingredients.map(data => {
-        if (data.ingredientId == index[0]) {
-          ingredientsArray.push([data, index[1]]);
-        }
-      });
-    });
-    return ingredientsArray;
-  }
+
     
     const item = route.params.ingredients;
-    const ingredientsArray = getAllIngredients(item);
+    const ingredientsArray = item;
     return (
         <View>
         <FlatList
@@ -62,7 +52,7 @@ export const IngredientDetails =({navigation,route, data}) =>{
           numColumns={3}
           data={ingredientsArray}
           renderItem={renderIngredient}
-          keyExtractor={item => `${item[0].ingredientId}`}
+          keyExtractor={item => `${item.id}`}
         />
       </View>
     )

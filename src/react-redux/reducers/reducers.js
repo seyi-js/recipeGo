@@ -2,9 +2,7 @@
 import {GET_DATA, LOAD_RECIPES, LOAD_ALL} from '../action/types'
 
 const initialState = {
-    recipes: null,
-    ingredients: null,
-    categories: null
+    recipes: null
 }
 
 
@@ -15,9 +13,7 @@ export default ( state = initialState, action ) => {
         case LOAD_ALL:
             return {
                 ...state,
-                recipes: action.payload.recipes,
-                ingredients: action.payload.ingredients,
-                categories: action.payload.categories
+               recipes: action.payload
             };
         default:
             return state

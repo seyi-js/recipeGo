@@ -1,3 +1,4 @@
+/* eslint-disable prettier/prettier */
 import { StyleSheet, Dimensions } from 'react-native';
 
 const { width: viewportWidth } = Dimensions.get('window');
@@ -5,7 +6,8 @@ const { width: viewportWidth } = Dimensions.get('window');
 const styles = StyleSheet.create({
   container: {
     backgroundColor: 'white',
-    flex: 1
+    flex: 1,
+   
   },
   carouselContainer: {
     minHeight: 250
@@ -41,7 +43,10 @@ const styles = StyleSheet.create({
     margin: 25,
     marginTop: 20,
     justifyContent: 'center',
-    alignItems: 'center'
+    alignItems: 'center',
+    // backgroundColor: 'blue',
+    // borderTopLeftRadius: 30,
+  // borderTopRightRadius: 30
   },
   infoContainer: {
     flex: 1,
@@ -66,10 +71,10 @@ const styles = StyleSheet.create({
     marginLeft: 5,
   },
   category: {
-    fontSize: 14,
+    fontSize: 19,
     fontWeight: 'bold',
     margin: 10,
-    color: '#2cd18a'
+    color: '#d44404'
   },
   infoDescriptionRecipe: {
     textAlign: 'left',

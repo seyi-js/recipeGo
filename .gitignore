@@ -1,5 +1,10 @@
+
+
+
+
 # OSX
 #
+src/component
 .DS_Store
 
 # Xcode
@@ -35,7 +40,7 @@ local.properties
 node_modules/
 npm-debug.log
 yarn-error.log
-*.rest_config
+
 # BUCK
 buck-out/
 \.buckd/
@@ -58,3 +63,5 @@ buck-out/
 
 # CocoaPods
 /ios/Pods/
+
+rest_config.js
