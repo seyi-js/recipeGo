@@ -4,19 +4,25 @@ import { FlatList, ScrollView,StatusBar, Text, View, TouchableHighlight, Image, 
 import NetInfo from "@react-native-community/netinfo";
 import styles from './styles';
 import { connect } from 'react-redux'
+import recipes from '../../Data/recipes.json';
+import categories from '../../Data/categories.json'
 export const HomeScreen = (props) => {
   const [isConnected, setIsConnected] =useState()
  
   useEffect( () => {
     
-    check()
+    check();
+
+    return ()=>{
+      console.log('')
+    }
   },[])
 // Subscribe to the network, so when theres is a network change, it reloads
 const check = () => {
     const unsubscribe = NetInfo.addEventListener(state => {
       // console.log("Connection type", state.type);
       // console.log( "Is connected?", state.isConnected );
-      setIsConnected(state.isConnected)
+      setIsConnected(true)
     } );
   }
 
@@ -24,7 +30,7 @@ const check = () => {
 // unsubscribe();
 
 
-  const {recipes} = props.data
+  // const {recipes} = props.data
   // console.log(recipes)
    const onPressRecipe = item => {
       props.navigation.navigate('Recipe', { item });
@@ -34,9 +40,9 @@ const check = () => {
     const renderRecipes = ({ item }) => (
         <TouchableHighlight underlayColor='rgba(73,182,77,1,0.9)' onPress={() => onPressRecipe(item)}>
           <View style={styles.container}>
-            <Image style={styles.photo} source={{ uri: item.image }} />
+            <Image style={styles.photo} source={{ uri: item.photo_url }} />
             <Text style={styles.title}>{item.title}</Text>
-            <Text style={styles.category}>{item.sourceName}</Text>
+            <Text style={styles.category}>{categories.find( category => category.id == item.categoryId) ? categories.find(category => category.id == item.categoryId).name : 'null'}</Text>
           </View>
         </TouchableHighlight>
   );
@@ -69,7 +75,7 @@ const check = () => {
               numColumns={2}
               data={recipes}
               renderItem={renderRecipes}
-              keyExtractor={item => `${item.id}`}
+              keyExtractor={item => Date.now() * Math.random(100)}
             />
           </View> : renderOnNoConnection}
       </>

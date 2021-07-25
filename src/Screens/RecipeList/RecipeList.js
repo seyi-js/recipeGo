@@ -9,6 +9,8 @@ import {
 } from 'react-native';
 import styles from './styles';
 import {connect} from 'react-redux'
+import recipes from '../../Data/recipes.json';
+import categories from '../../Data/categories.json';
 const RecipeList = ({navigation,route,data }) => {
 
   const onPressRecipe = item => {
@@ -24,7 +26,7 @@ const RecipeList = ({navigation,route,data }) => {
     </TouchableHighlight>
   );
 
-  const {categories, recipes} = data
+  // const {categories, recipes} = data
   //Get Reciepes
   const getRecipes = (categoryId) => {
     const recipesArray = [];
@@ -33,6 +35,7 @@ const RecipeList = ({navigation,route,data }) => {
         recipesArray.push(data);
       }
     });
+
     return recipesArray;
   }
 
@@ -46,9 +49,9 @@ const RecipeList = ({navigation,route,data }) => {
     });
     return name;
   }
-  const item = route.params.category;
+  const category = route.params.category;
   // console.log(item)
-    const recipesArray = getRecipes(item.id);
+    const recipesArray = getRecipes(category.id);
   return (
     <View>
         <FlatList
@@ -57,7 +60,7 @@ const RecipeList = ({navigation,route,data }) => {
           numColumns={2}
           data={recipesArray}
           renderItem={renderRecipes}
-          keyExtractor={item => `${item.recipeId}`}
+          keyExtractor={item => Date.now() * Math.random(100)}
         />
       </View>
   )

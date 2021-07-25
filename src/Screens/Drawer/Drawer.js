@@ -15,8 +15,9 @@ const Drawer = ({navigation}) => {
             title="HOME"
             source={require('../../../assets/icons/home.png')}
             onPress={() => {
-              navigation.navigate('Home');
               navigation.closeDrawer();
+              navigation.navigate('Home');
+              
             }}
           />
          
@@ -24,8 +25,9 @@ const Drawer = ({navigation}) => {
             title="SEARCH"
             source={require('../../../assets/icons/search.png')}
             onPress={() => {
-              navigation.navigate('Search');
               navigation.closeDrawer();
+              navigation.navigate('Search');
+             
             }}
           />
         </View>

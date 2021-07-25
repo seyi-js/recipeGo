@@ -17,11 +17,15 @@ export const loadData =  () =>dispatch=> {
   fetch( `https://spoonacular-recipe-food-nutrition-v1.p.rapidapi.com/recipes/random?number=${number}`, config )
     .then( ( res ) => res.json() )
     .then( res =>dispatch( {
+      
       // console.log(data.categories)
       type: LOAD_ALL,
       payload: res.recipes
     }) )
-    .catch( err => console.log( err ))
+    .catch( err =>{
+     
+      console.log( err )
+    })
 
 
   

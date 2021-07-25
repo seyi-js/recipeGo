@@ -33,6 +33,7 @@ const Navigating = () => {
           backgroundColor: '#fff',
         },
         headerLeft: () => (
+          // console.log(navigation)
           <MenuImage navigation={ navigation } />
         )
       } ) } />
@@ -125,7 +126,7 @@ const searchOptions=({navigation,route})=> ({
       onChangeText={text =>route.params.handleSearch(text)}
       onClear={() =>route.params.handleSearch('')}
       placeholder="Search"
-      value={()=>route.params}
+      value={()=>route.params ? route.params.getValue(): ''}
     />
   )
 })

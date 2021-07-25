@@ -11,6 +11,7 @@ import {
 import styles from './styles';
 import {connect} from 'react-redux'
 import rest_config from '../../../rest_config'
+import recipes from '../../Data/recipes.json'
 export const Ingredients =({navigation,route,data})=> {
   const [sameIn, setSameIn] = useState([])
    const onPressRecipe = item => {
@@ -21,7 +22,7 @@ export const Ingredients =({navigation,route,data})=> {
         <TouchableHighlight underlayColor='rgba(73,182,77,1,0.9)' onPress={() => onPressRecipe(item)}>
           <TouchableHighlight underlayColor='rgba(73,182,77,1,0.9)' onPress={() => onPressRecipe(item)}>
             <View style={styles.container}>
-              <Image style={styles.photo} source={{ uri: item.image }} />
+              <Image style={styles.photo} source={{ uri: item.photo_url }} />
               <Text style={styles.title}>{item.title}</Text>
               <Text style={styles.category}></Text>
             </View>
@@ -46,32 +47,43 @@ export const Ingredients =({navigation,route,data})=> {
       return data
   }
  
+  const getRecipesById =(id)=>{
+    return recipes.map( recipe =>{
+      recipe.ingredients.find( ig => ig[0] == id)
+
+      return recipe
+    })
+  }
   
   const ingredientName = route.params.name;
   const image = route.params.image;
+  const id = route.params.id;
   useEffect( () => {
-    getRecipesByIngredient(ingredientName)
-  })
+    setSameIn(getRecipesById(id))
+  },[id])
     
     
     
     return (
-        <ScrollView style={styles.mainContainer}>
+      <>
+        <View >
         <View style={{ borderBottomWidth: 0.4, marginBottom: 10, borderBottomColor: 'grey' }}>
-          <Image style={styles.photoIngredient} source={{ uri: `https://spoonacular.com/cdn/ingredients_100x100/${image}` }} />
+          <Image style={styles.photoIngredient} source={{ uri: `${image}` }} />
         </View>
         <Text style={styles.ingredientInfo}>Recipes with {ingredientName}:</Text>
-        <View>
-          <FlatList
-            vertical
-            showsVerticalScrollIndicator={false}
-            numColumns={2}
-            data={sameIn}
-            renderItem={renderRecipes}
-            keyExtractor={item => `${item.id}`}
-          />
-        </View>
-      </ScrollView>
+       
+      </View>
+       <View style={{marginBottom:30}} >
+       <FlatList
+         vertical
+         showsVerticalScrollIndicator={false}
+         numColumns={2}
+         data={sameIn}
+         renderItem={renderRecipes}
+         keyExtractor={item => Date.now() * Math.random(100)}
+       />
+     </View>
+     </>
     )
 }
 const mapStateToProps = ( state ) => ( {
