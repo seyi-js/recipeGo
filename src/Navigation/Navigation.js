@@ -26,7 +26,7 @@ const Navigating = () => {
 
 
     <Stack.Navigator>
-    <Stack.Screen options={ { headerShown: false } } name="splash" component={ SplashScreen } />
+    {/* <Stack.Screen options={ { headerShown: false } } name="splash" component={ SplashScreen } /> */}
       <Stack.Screen name="Home" component={ HomeScreen } options={ ( { navigation } ) => ( {
         title: 'Home',
         headerStyle: {
@@ -126,7 +126,7 @@ const searchOptions=({navigation,route})=> ({
       onChangeText={text =>route.params.handleSearch(text)}
       onClear={() =>route.params.handleSearch('')}
       placeholder="Search"
-      value={()=>route.params ? route.params.getValue(): ''}
+      value={()=>route.params ? `${route.params.getValue()}`: ''}
     />
   )
 })
