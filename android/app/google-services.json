@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "165192742795",
+    "project_id": "recipe-app-5981e",
+    "storage_bucket": "recipe-app-5981e.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:165192742795:android:eaeca30eecb30cd1b3e18e",
+        "android_client_info": {
+          "package_name": "com.seyijs.firebase"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "165192742795-o0c9cds94f25et99jg1gpjkptia6tup4.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAVvBQZofUqTdIJ6U_1F-EKWCuNAxNbhlA"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "165192742795-o0c9cds94f25et99jg1gpjkptia6tup4.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
