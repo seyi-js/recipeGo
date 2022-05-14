@@ -1,94 +1,96 @@
 /* eslint-disable prettier/prettier */
-import { StyleSheet, Dimensions } from 'react-native';
+import { StyleSheet, Dimensions } from "react-native";
+import { DARK_MODE, MODE } from "../../firebase/config";
 
-const { width: viewportWidth } = Dimensions.get('window');
+const { width: viewportWidth } = Dimensions.get("window");
 
 const styles = StyleSheet.create({
   container: {
-    backgroundColor: 'white',
+    backgroundColor: MODE,
     flex: 1,
-   
   },
   carouselContainer: {
-    minHeight: 250
+    minHeight: 250,
   },
   carousel: {},
 
   image: {
     ...StyleSheet.absoluteFillObject,
-    width: '100%',
-    height: 250
+    width: "100%",
+    height: 250,
   },
   imageContainer: {
     flex: 1,
-    justifyContent: 'center',
+    justifyContent: "center",
     width: viewportWidth,
-    height: 250
+    height: 250,
   },
   paginationContainer: {
     flex: 1,
-    position: 'absolute',
-    alignSelf: 'center',
+    position: "absolute",
+    alignSelf: "center",
     paddingVertical: 8,
-    marginTop: 200
+    marginTop: 200,
   },
   paginationDot: {
     width: 8,
     height: 8,
     borderRadius: 4,
-    marginHorizontal: 0
+    marginHorizontal: 0,
   },
   infoRecipeContainer: {
     flex: 1,
     margin: 25,
     marginTop: 20,
-    justifyContent: 'center',
-    alignItems: 'center',
+    justifyContent: "center",
+    alignItems: "center",
     // backgroundColor: 'blue',
     // borderTopLeftRadius: 30,
-  // borderTopRightRadius: 30
+    // borderTopRightRadius: 30
   },
   infoContainer: {
     flex: 1,
-    flexDirection: 'row',
-    alignItems: 'center',
-    justifyContent: 'flex-start',
+    flexDirection: "row",
+    alignItems: "center",
+    justifyContent: "flex-start",
   },
   buttonContainer: {
     flex: 1,
-    flexDirection: 'row',
-    alignItems: 'center',
-    justifyContent: 'flex-start',
+    flexDirection: "row",
+    alignItems: "center",
+    justifyContent: "flex-start",
   },
   infoPhoto: {
     height: 20,
     width: 20,
-    marginRight: 0
+    marginRight: 0,
+    // color: "#fff",
   },
   infoRecipe: {
     fontSize: 14,
-    fontWeight: 'bold',
+    fontWeight: "bold",
     marginLeft: 5,
+    color: DARK_MODE ? "#fff" : "#000",
   },
   category: {
     fontSize: 19,
-    fontWeight: 'bold',
+    fontWeight: "bold",
     margin: 10,
-    color: '#d44404'
+    color: DARK_MODE ? "#fff" : "#d44404",
   },
   infoDescriptionRecipe: {
-    textAlign: 'left',
+    textAlign: "left",
     fontSize: 16,
     marginTop: 30,
-    margin: 15
+    margin: 15,
   },
   infoRecipeName: {
     fontSize: 28,
     margin: 10,
-    fontWeight: 'bold',
-    color: 'black',
-    textAlign: 'center'
-  }
+    fontWeight: "bold",
+    color: DARK_MODE ? "#fff" : "black",
+    textAlign: "center",
+  },
 });
 
 export default styles;

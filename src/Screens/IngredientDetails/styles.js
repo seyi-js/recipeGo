@@ -1,6 +1,7 @@
-import { StyleSheet, Dimensions } from 'react-native';
+import { StyleSheet, Dimensions } from "react-native";
+import { DARK_MODE, MODE } from "../../firebase/config";
 // screen sizing
-const { width, height } = Dimensions.get('window');
+const { width, height } = Dimensions.get("window");
 // orientation must fixed
 const SCREEN_WIDTH = width < height ? width : height;
 
@@ -13,24 +14,27 @@ const RECIPE_ITEM_MARGIN = RECIPE_ITEM_OFFSET * 2;
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    alignItems: 'center',
+    alignItems: "center",
     margin: RECIPE_ITEM_OFFSET,
     marginTop: 30,
-    width: (SCREEN_WIDTH - RECIPE_ITEM_MARGIN) / numColumns - RECIPE_ITEM_OFFSET,
-    height: RECIPE_ITEM_HEIGHT + 60
+    width:
+      (SCREEN_WIDTH - RECIPE_ITEM_MARGIN) / numColumns - RECIPE_ITEM_OFFSET,
+    height: RECIPE_ITEM_HEIGHT + 60,
+    backgroundColor: MODE,
   },
   title: {
     margin: 10,
     marginBottom: 5,
-    color: 'black',
+    color: DARK_MODE ? "#fff" : "black",
     fontSize: 13,
-    textAlign: 'center'
+    textAlign: "center",
   },
   photo: {
-    width: (SCREEN_WIDTH - RECIPE_ITEM_MARGIN) / numColumns - RECIPE_ITEM_OFFSET,
+    width:
+      (SCREEN_WIDTH - RECIPE_ITEM_MARGIN) / numColumns - RECIPE_ITEM_OFFSET,
     height: RECIPE_ITEM_HEIGHT,
-    borderRadius: 60
-  }
+    borderRadius: 60,
+  },
 });
 
 export default styles;

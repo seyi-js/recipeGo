@@ -1,5 +1,6 @@
 /* eslint-disable prettier/prettier */
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
+import { Switch } from "react-native";
 import { NavigationContainer } from "@react-navigation/native";
 import { createStackNavigator } from "@react-navigation/stack";
 import { createDrawerNavigator } from "@react-navigation/drawer";
@@ -20,9 +21,24 @@ import { ListItem, SearchBar } from "react-native-elements";
 import Search from "../Screens/Search/Search";
 import Register from "../Screens/Authentication/Register/Register";
 import Login from "../Screens/Authentication/Login/Login";
+import { changeMode } from "../react-redux/action/actions";
 const Stack = createStackNavigator();
 
 const Navigating = () => {
+  const [state, setState] = useState({
+    isEnabled: false,
+  });
+
+  const { isEnabled } = state;
+
+  const setToggle = () => {
+    store.dispatch(changeMode());
+    setState({ ...state, isEnabled: !isEnabled });
+
+    // if (isEnabled) {
+    //   DARK_MODE = false;
+    // }
+  };
   return (
     <Stack.Navigator>
       {/* <Stack.Screen options={ { headerShown: false } } name="splash" component={ SplashScreen } /> */}
@@ -41,12 +57,22 @@ const Navigating = () => {
         component={HomeScreen}
         options={({ navigation }) => ({
           title: "Home",
+
           headerStyle: {
             backgroundColor: "#fff",
           },
           headerLeft: () => (
             // console.log(navigation)
             <MenuImage navigation={navigation} />
+          ),
+          headerRight: () => (
+            <Switch
+              trackColor={{ false: "#767577", true: "#81b0ff" }}
+              thumbColor={isEnabled ? "#f5dd4b" : "#f4f3f4"}
+              ios_backgroundColor="#3e3e3e"
+              onValueChange={() => setToggle()}
+              value={isEnabled}
+            />
           ),
         })}
       />
@@ -118,7 +144,7 @@ export const Navigation = () => {
     store.dispatch(loadData());
   }, []);
   return (
-    <SafeAreaProvider>
+    <SafeAreaProvider style={{ backgroundColor: "black" }}>
       <NavigationContainer>
         <DrawerStack />
       </NavigationContainer>

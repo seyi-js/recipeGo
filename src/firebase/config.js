@@ -17,14 +17,12 @@ const config = {
   name: "SECONDARY_APP",
 };
 
-(async () => {
-  //   console.log(firebase);
-})();
-
-// if (!firebase.apps.length) {
-firebase.initializeApp(firebaseConfig, "SECONDARY_APP");
-// }
+if (!firebase.apps.length) {
+  firebase.initializeApp(firebaseConfig, "SECONDARY_APP");
+}
 
 // firebase.app().auth();
 
-export { firebase };
+let DARK_MODE = false;
+const MODE = DARK_MODE ? "#18191a" : "#fff";
+export { firebase, DARK_MODE, MODE };

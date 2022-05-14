@@ -38,7 +38,7 @@ const Login = ({ navigation }) => {
         .signInWithEmailAndPassword(email, password);
 
       setState({ ...setState, isLoading: false });
-      navigation.navigate("Home");
+      navigation.replace("Home");
     } catch (error) {
       setState({ ...setState, isLoading: false });
       console.log(error);

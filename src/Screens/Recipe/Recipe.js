@@ -1,30 +1,28 @@
 /* eslint-disable prettier/prettier */
-import React,{useState, useEffect} from 'react';
+import React, { useState, useEffect } from "react";
 import {
   ScrollView,
   Text,
   View,
   Image,
   Dimensions,
-  TouchableHighlight
-} from 'react-native';
-import styles from './styles';
-import ViewIngredientsButton from '../../component/ViewIngredient/ViewIngredient';
-import {connect} from 'react-redux'
-import rest_config from '../../../rest_config'
-import categories from '../../Data/categories.json'
+  TouchableHighlight,
+} from "react-native";
+import styles from "./styles";
+import ViewIngredientsButton from "../../component/ViewIngredient/ViewIngredient";
+import { connect } from "react-redux";
+import rest_config from "../../../rest_config";
+import categories from "../../Data/categories.json";
 
-export  const Recipe=({navigation,route})=> {
-  const [item, setItem]=useState({})
+export const Recipe = ({ navigation, route, data }) => {
+  const [item, setItem] = useState({});
 
-  
-
-  useEffect( () => {
+  useEffect(() => {
     const item = route.params.item;
-    setItem(item)
+    setItem(item);
 
-    const id = item.id
-   /* const config = {
+    const id = item.id;
+    /* const config = {
       headers: {
         "x-rapidapi-host": rest_config.API_HOST,
         "x-rapidapi-key": rest_config.API_KEY
@@ -36,63 +34,95 @@ export  const Recipe=({navigation,route})=> {
       .catch ( err=> console.log( err ))
 */
 
-      return ()=>{
-        console.log('')
-      }
-    
-  },[route.params.item]);
-    
-    
-    
-    const category = categories.find( category => category.id == item.categoryId) ? categories.find(category => category.id == item.categoryId) : 'null'
-    const title = item.title;
-   
+    return () => {
+      console.log("");
+    };
+  }, [route.params.item]);
 
-    
-    return (
-      <ScrollView style={styles.container}>
-        <View style={styles.carouselContainer}>
-          <View style={styles.carousel}>
-          <Image style={styles.image}  source={{ uri: item.photo_url }}  />
-          </View>
+  const category = categories.find((category) => category.id == item.categoryId)
+    ? categories.find((category) => category.id == item.categoryId)
+    : "null";
+  const title = item.title;
+
+  return (
+    <ScrollView
+      style={{
+        ...styles.container,
+        backgroundColor: data.DARK_MODE ? "#000" : "#fff",
+      }}
+    >
+      <View style={styles.carouselContainer}>
+        <View style={styles.carousel}>
+          <Image style={styles.image} source={{ uri: item.photo_url }} />
         </View>
-        <View style={styles.infoRecipeContainer}>
-          <Text style={styles.infoRecipeName}>{item.title}</Text>
-          <View style={styles.infoContainer}>
-            <TouchableHighlight
-              onPress={() => navigation.navigate('RecipeList', { category, title })}
-            >
-              <Text style={styles.category}>{category.name}</Text>
-            </TouchableHighlight>
-          </View>
-
-          <View style={styles.infoContainer}>
-            <Image style={styles.infoPhoto} source={require('../../../assets/icons/time.png')} />
-            <Text style={styles.infoRecipe}>{item.time} minutes </Text>
-          </View>
-
-          <View style={styles.infoContainer}>
-            <ViewIngredientsButton
-              onPress={() => {
-                let ingredients = item.ingredients;
-                let titles = 'Ingredients for ' + title;
-                navigation.navigate('IngredientsDetails', { ingredients, titles,item });
+      </View>
+      <View style={styles.infoRecipeContainer}>
+        <Text
+          style={{
+            ...styles.infoRecipeName,
+            color: data.DARK_MODE ? "#fff" : "#000",
+          }}
+        >
+          {item.title}
+        </Text>
+        <View style={styles.infoContainer}>
+          <TouchableHighlight
+            onPress={() =>
+              navigation.navigate("RecipeList", { category, title })
+            }
+          >
+            <Text
+              style={{
+                ...styles.category,
+                color: data.DARK_MODE ? "#fff" : "#000",
               }}
-            />
-          </View>
-          <View style={styles.infoContainer}>
-            <Text style={styles.infoDescriptionRecipe}>{item.instructions}</Text>
-          </View>
+            >
+              {category.name}
+            </Text>
+          </TouchableHighlight>
         </View>
-      </ScrollView>
-    );
-  }
 
+        <View style={styles.infoContainer}>
+          <Image
+            style={styles.infoPhoto}
+            source={require("../../../assets/icons/time.png")}
+          />
+          <Text
+            style={{
+              ...styles.infoRecipe,
+              color: data.DARK_MODE ? "#fff" : "#000",
+            }}
+          >
+            {item.time} minutes{" "}
+          </Text>
+        </View>
 
-const mapStateToProps = state => ( {
-  data: state.storeData
-})
-export default connect(mapStateToProps, null)(Recipe)
+        <View style={styles.infoContainer}>
+          <ViewIngredientsButton
+            data={data}
+            onPress={() => {
+              let ingredients = item.ingredients;
+              let titles = "Ingredients for " + title;
+              navigation.navigate("IngredientsDetails", {
+                ingredients,
+                titles,
+                item,
+              });
+            }}
+          />
+        </View>
+        <View style={styles.infoContainer}>
+          <Text style={styles.infoDescriptionRecipe}>{item.instructions}</Text>
+        </View>
+      </View>
+    </ScrollView>
+  );
+};
+
+const mapStateToProps = (state) => ({
+  data: state.storeData,
+});
+export default connect(mapStateToProps, null)(Recipe);
 /*cooking steps
 <View style={styles.infoContainer}>
   <Image style={styles.infoPhoto} source={require('../../../assets/icons/info.png')} />
