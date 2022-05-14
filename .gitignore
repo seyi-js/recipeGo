@@ -65,4 +65,4 @@ buck-out/
 # CocoaPods
 /ios/Pods/
 
-rest_config.js
+# rest_config.js
