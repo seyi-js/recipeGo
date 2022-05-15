@@ -1,6 +1,6 @@
-import firebase from "react-native-firebase";
+import firebase from "@react-native-firebase/app";
 // import firebase from "firebase/auth";
-// import "@firebase/auth";
+import "@react-native-firebase/auth";
 // import "@firebase/firestore";
 
 const firebaseConfig = {
@@ -20,9 +20,8 @@ const config = {
 if (!firebase.apps.length) {
   firebase.initializeApp(firebaseConfig, "SECONDARY_APP");
 }
-
 // firebase.app().auth();
-
+// let firebase;
 let DARK_MODE = false;
 const MODE = DARK_MODE ? "#18191a" : "#fff";
 export { firebase, DARK_MODE, MODE };

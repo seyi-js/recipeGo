@@ -12,7 +12,9 @@ import {
 import CheckBox from "@react-native-community/checkbox";
 import React, { useState } from "react";
 import styles from "./css";
+
 import { firebase } from "../../../firebase/config";
+
 const Login = ({ navigation }) => {
   const [state, setState] = useState({
     email: "",
